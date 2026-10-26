@@ -1,0 +1,351 @@
+-- // GOKU ULTRA INSTINCT GUI // PERFECT LAYOUT FIX
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TextChatService = game:GetService("TextChatService")
+local player = Players.LocalPlayer
+
+-- Purani GUI hatao
+local existingGui = player.PlayerGui:FindFirstChild("GokuUltraGUI")
+if existingGui then existingGui:Destroy() end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "GokuUltraGUI"
+gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+gui.Parent = player:WaitForChild("PlayerGui")
+
+--// CONFIG
+local RP_NAME = "匕∨メ Ｓㄗ丹爪爪モ🇷"
+local words = {
+    "TMKX MEH CHILL VIBES ONLY BRO GOD MUNCH BEAM ⚡",
+    "TMKX MEH LOBBY CHILL SCENE ON HELICOPTER HAJMOLA🔥",
+    "TMKX MEH BREAD ROLL MAGGI MOBILE TAX MILK 👽",
+    "TMKX MEH SMOOTH SYSTEM RUNNING LATE CASHEW  🚀",
+    "TMKX MEH CASUAL GAMING VIBE MATCH ROLL COLGATE 👑",
+    "TMKX MEH SPEED RUNNER MODE ON RACE BISCUIT ⚡",
+    "TMKX MEH LOBBY TAKING OVER CLEAN DRY SKIN 🎯",
+    "TMKX MEH HACKER MONSTER ACTIVE BRO  TARGET KUDAI💀",
+    "TMKX MEH ULTIMATE SPAM ENGINE V4 CHEQUE BOOK 🔥",
+    "TMKX MEH NO STRESS JUST VIBING SONG SCRIPT BOT✨"
+}
+local running = false
+local currentIndex = 1
+
+-- Chat Send Function
+local function sendRawChatMessage(message)
+    local success = pcall(function()
+        local textChannels = TextChatService:FindFirstChild("TextChannels")
+        local general = textChannels and textChannels:FindFirstChild("RBXGeneral")
+        if general then
+            general:SendAsync(message)
+            return true
+        end
+    end)
+    if success then return end
+
+    pcall(function()
+        local events = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
+        if events and events:FindFirstChild("SayMessageRequest") then
+            events.SayMessageRequest:FireServer(message, "All")
+        end
+    end)
+end
+
+-- Intro Message
+task.spawn(function()
+    task.wait(1.5)
+    local username = player.Name
+    sendRawChatMessage("⚙ [SYSTEM INTRO] 匕∨メ Ｓㄗ丹爪爪モ🇷 // Executed by bro " .. username .. " | ULTRA & SECURE! 🚀")
+end)
+
+-- Brookhaven Remote Events
+task.spawn(function()
+    pcall(function()
+        local RE = ReplicatedStorage:WaitForChild("RE", 6)
+        if not RE then return end
+        local NameRemote = RE:FindFirstChild("1RPNam1eTex1t")
+        local ColorRemote = RE:FindFirstChild("1RPNam1eColo1r")
+
+        if NameRemote then
+            for _ = 1, 6 do
+                NameRemote:FireServer("RolePlayName", RP_NAME)
+                task.wait(0.3)
+            end
+        end
+
+        if ColorRemote then
+            while true do
+                local c = Color3.fromHSV((tick() % 5) / 5, 1, 1)
+                ColorRemote:FireServer("PickingRPNameColor", c)
+                task.wait(0.1)
+            end
+        end
+    end)
+end)
+
+-- Small Open Button (Minimized)
+local openBtn = Instance.new("TextButton", gui)
+openBtn.Name = "OpenButton"
+openBtn.BackgroundColor3 = Color3.fromRGB(15, 25, 35)
+openBtn.Position = UDim2.new(0, 20, 0.5, -25)
+openBtn.Size = UDim2.fromOffset(150, 45)
+openBtn.Font = Enum.Font.GothamBlack
+openBtn.Text = "👑 OPEN GUI"
+openBtn.TextColor3 = Color3.fromRGB(0, 240, 255)
+openBtn.TextSize = 13
+openBtn.Active = true
+openBtn.Draggable = true
+openBtn.Visible = false
+openBtn.ZIndex = 150
+openBtn.Parent = gui
+Instance.new("UICorner", openBtn).CornerRadius = UDim.new(0, 8)
+Instance.new("UIStroke", openBtn).Color = Color3.fromRGB(0, 200, 220)
+
+-- Main Frame (Centered properly)
+local main = Instance.new("Frame", gui)
+main.Name = "MainFrame"
+main.Size = UDim2.new(0, 750, 0, 480)
+main.Position = UDim2.new(0.5, -375, 0.5, -240)
+main.BackgroundColor3 = Color3.fromRGB(0,0,0)
+main.BorderSizePixel = 0
+main.Active = true
+main.Draggable = true
+Instance.new("UICorner", main).CornerRadius = UDim.new(0, 10)
+
+-- Background Overlay
+local overlay = Instance.new("Frame", main)
+overlay.Size = UDim2.new(1,0,1,0)
+overlay.BackgroundColor3 = Color3.fromRGB(0,10,20)
+overlay.BackgroundTransparency = 0.3
+Instance.new("UICorner", overlay).CornerRadius = UDim.new(0, 10)
+
+-- Title / Header inside Main Frame
+local titleLab = Instance.new("TextLabel", main)
+titleLab.Text = "☠ GOKU ULTRA INSTINCT GUI // SPAMMER"
+titleLab.Position = UDim2.new(0.04, 0, 0.04, 0)
+titleLab.Size = UDim2.new(0.6, 0, 0, 30)
+titleLab.BackgroundTransparency = 1
+titleLab.TextColor3 = Color3.fromRGB(0, 240, 255)
+titleLab.Font = Enum.Font.GothamBold
+titleLab.TextSize = 16
+titleLab.TextXAlignment = Enum.TextXAlignment.Left
+titleLab.ZIndex = 2
+
+-- Minimize Button (-)
+local tvxMinimize = Instance.new("TextButton", main)
+tvxMinimize.Size = UDim2.new(0, 35, 0, 28)
+tvxMinimize.Position = UDim2.new(0.91, 0, 0.04, 0)
+tvxMinimize.Text = "-"
+tvxMinimize.TextSize = 20
+tvxMinimize.Font = Enum.Font.GothamBold
+tvxMinimize.BackgroundColor3 = Color3.fromRGB(25, 40, 70)
+tvxMinimize.TextColor3 = Color3.fromRGB(240, 240, 240)
+tvxMinimize.ZIndex = 50
+Instance.new("UICorner", tvxMinimize).CornerRadius = UDim.new(0, 6)
+Instance.new("UIStroke", tvxMinimize).Color = Color3.fromRGB(0, 200, 220)
+
+-- Left Side Container (Inputs & Buttons)
+local leftSide = Instance.new("Frame", main)
+leftSide.Size = UDim2.new(0.5, 0, 0.8, 0)
+leftSide.Position = UDim2.new(0.04, 0, 0.15, 0)
+leftSide.BackgroundTransparency = 1
+leftSide.ZIndex = 2
+
+-- Target Box Section
+local targetHead = Instance.new("TextLabel", leftSide)
+targetHead.Text = "TARGET NAME [1]"
+targetHead.Position = UDim2.new(0, 0, 0, 0)
+targetHead.Size = UDim2.new(1, 0, 0, 22)
+targetHead.BackgroundTransparency = 1
+targetHead.TextColor3 = Color3.fromRGB(80,255,255)
+targetHead.Font = Enum.Font.GothamBold
+targetHead.TextSize = 12
+targetHead.TextXAlignment = Enum.TextXAlignment.Left
+targetHead.ZIndex = 2
+
+local targetBox = Instance.new("TextBox", leftSide)
+targetBox.PlaceholderText = "Enter Target Name..."
+targetBox.Text = ""
+targetBox.Position = UDim2.new(0, 0, 0.08, 0)
+targetBox.Size = UDim2.new(1, 0, 0, 40)
+targetBox.BackgroundColor3 = Color3.fromRGB(10,20,30)
+targetBox.TextColor3 = Color3.fromRGB(200,255,255)
+targetBox.Font = Enum.Font.Code
+targetBox.TextSize = 14
+targetBox.ZIndex = 2
+Instance.new("UICorner", targetBox)
+Instance.new("UIStroke", targetBox).Color = Color3.fromRGB(0,200,255)
+
+-- Delay Box Section
+local delayHead = Instance.new("TextLabel", leftSide)
+delayHead.Text = "DELAY BOX"
+delayHead.Position = UDim2.new(0, 0, 0.28, 0)
+delayHead.Size = UDim2.new(1, 0, 0, 22)
+delayHead.BackgroundTransparency = 1
+delayHead.TextColor3 = Color3.fromRGB(180,255,255)
+delayHead.Font = Enum.Font.GothamBold
+delayHead.TextSize = 12
+delayHead.TextXAlignment = Enum.TextXAlignment.Left
+delayHead.ZIndex = 2
+
+local delayBox = Instance.new("TextBox", leftSide)
+delayBox.Text = "0.25"
+delayBox.Position = UDim2.new(0, 0, 0.36, 0)
+delayBox.Size = UDim2.new(1, 0, 0, 40)
+delayBox.BackgroundColor3 = Color3.fromRGB(10,20,30)
+delayBox.TextColor3 = Color3.fromRGB(100,255,255)
+delayBox.Font = Enum.Font.GothamBold
+delayBox.TextSize = 16
+delayBox.ZIndex = 2
+Instance.new("UICorner", delayBox)
+Instance.new("UIStroke", delayBox).Color = Color3.fromRGB(0,200,255)
+
+-- Status
+local sStatus = Instance.new("TextLabel", leftSide)
+sStatus.Text = "STATUS: IDLE"
+sStatus.Position = UDim2.new(0, 0, 0.55, 0)
+sStatus.Size = UDim2.new(1, 0, 0, 25)
+sStatus.BackgroundTransparency = 1
+sStatus.TextColor3 = Color3.fromRGB(255,255,255)
+sStatus.Font = Enum.Font.GothamBold
+sStatus.TextSize = 13
+sStatus.TextXAlignment = Enum.TextXAlignment.Left
+sStatus.ZIndex = 2
+
+-- Start & Stop Buttons
+local startBtn = Instance.new("TextButton", leftSide)
+startBtn.Text = "▶ START"
+startBtn.Position = UDim2.new(0, 0, 0.68, 0)
+startBtn.Size = UDim2.new(0.48, 0, 0, 48)
+startBtn.BackgroundColor3 = Color3.fromRGB(0,200,100)
+startBtn.TextColor3 = Color3.fromRGB(180,255,180)
+startBtn.Font = Enum.Font.GothamBlack
+startBtn.TextSize = 16
+startBtn.ZIndex = 10
+Instance.new("UICorner", startBtn)
+Instance.new("UIStroke", startBtn).Color = Color3.fromRGB(0,255,100)
+
+local stopBtn = Instance.new("TextButton", leftSide)
+stopBtn.Text = "☐ STOP"
+stopBtn.Position = UDim2.new(0.52, 0, 0.68, 0)
+stopBtn.Size = UDim2.new(0.48, 0, 0, 48)
+stopBtn.BackgroundColor3 = Color3.fromRGB(200,50,50)
+stopBtn.TextColor3 = Color3.fromRGB(255,150,150)
+stopBtn.Font = Enum.Font.GothamBlack
+stopBtn.TextSize = 16
+stopBtn.ZIndex = 10
+Instance.new("UICorner", stopBtn)
+Instance.new("UIStroke", stopBtn).Color = Color3.fromRGB(255,50,50)
+
+-- Right Options Frame (13 Prefixes Scrolling)
+local rightFrame = Instance.new("Frame", main)
+rightFrame.Size = UDim2.new(0.42, 0, 0.8, 0)
+rightFrame.Position = UDim2.new(0.54, 0, 0.15, 0)
+rightFrame.BackgroundColor3 = Color3.fromRGB(10,20,30)
+rightFrame.BackgroundTransparency = 0.4
+rightFrame.ZIndex = 2
+Instance.new("UICorner", rightFrame)
+Instance.new("UIStroke", rightFrame).Color = Color3.fromRGB(0,200,255)
+
+local optTitle = Instance.new("TextLabel", rightFrame)
+optTitle.Text = "⚙ OPTIONS (13 PREFIXES)"
+optTitle.Size = UDim2.new(1, 0, 0, 30)
+optTitle.Position = UDim2.new(0, 0, 0.02, 0)
+optTitle.BackgroundTransparency = 1
+optTitle.TextColor3 = Color3.fromRGB(100,255,255)
+optTitle.Font = Enum.Font.GothamBold
+optTitle.TextSize = 12
+optTitle.ZIndex = 3
+
+local scroll = Instance.new("ScrollingFrame", rightFrame)
+scroll.Position = UDim2.new(0.05, 0, 0.15, 0)
+scroll.Size = UDim2.new(0.9, 0, 0.8, 0)
+scroll.BackgroundTransparency = 1
+scroll.CanvasSize = UDim2.new(0, 0, 0, 13 * 34)
+scroll.ScrollBarThickness = 4
+scroll.ZIndex = 3
+
+local uiList = Instance.new("UIListLayout", scroll)
+uiList.Padding = UDim.new(0, 4)
+
+local prefixes = {
+    "@==@", "/____/", "-_-", "@___@", 
+    "#---#", "===>>", "[!]", "~~~", 
+    "<<<>>>", "$$$", "===", ">>>", "###"
+}
+local selectedPrefix = prefixes[1]
+
+for i, p in ipairs(prefixes) do
+    local btn = Instance.new("TextButton", scroll)
+    btn.Text = "  " .. p
+    btn.Size = UDim2.new(1, 0, 0, 30)
+    btn.BackgroundColor3 = (p == selectedPrefix) and Color3.fromRGB(0,60,60) or Color3.fromRGB(20,30,40)
+    btn.TextColor3 = Color3.fromRGB(150,255,255)
+    btn.Font = Enum.Font.Code
+    btn.TextSize = 13
+    btn.TextXAlignment = Enum.TextXAlignment.Left
+    btn.ZIndex = 4
+    Instance.new("UICorner", btn)
+    if p == selectedPrefix then
+        Instance.new("UIStroke", btn).Color = Color3.fromRGB(0,255,255)
+    end
+    
+    btn.MouseButton1Click:Connect(function()
+        selectedPrefix = p
+        for _, ch in pairs(scroll:GetChildren()) do 
+            if ch:IsA("TextButton") then 
+                ch.BackgroundColor3 = Color3.fromRGB(20,30,40) 
+            end 
+        end
+        btn.BackgroundColor3 = Color3.fromRGB(0,60,60)
+    end)
+end
+
+-- Logic Connections
+local function sendChatMessage(msg, target)
+    local repeatedPrefix = string.rep(selectedPrefix, 10)
+    local finalMessage = repeatedPrefix .. " "
+    if target and target:gsub("%s+", "") ~= "" then
+        finalMessage = finalMessage .. "[" .. target .. "] "
+    end
+    finalMessage = finalMessage .. msg .. " " .. repeatedPrefix
+    sendRawChatMessage(finalMessage)
+end
+
+openBtn.MouseButton1Click:Connect(function()
+    openBtn.Visible = false
+    main.Visible = true
+end)
+
+tvxMinimize.MouseButton1Click:Connect(function()
+    main.Visible = false
+    openBtn.Visible = true
+end)
+
+startBtn.MouseButton1Click:Connect(function()
+    if running then return end
+    local delaySeconds = tonumber(delayBox.Text) or 0.25
+    if delaySeconds < 0.05 then delaySeconds = 0.25 end
+
+    running = true
+    sStatus.Text = "STATUS: ACTIVE"
+    sStatus.TextColor3 = Color3.fromRGB(0,255,120)
+
+    task.spawn(function()
+        while running do
+            sendChatMessage(words[currentIndex], targetBox.Text)
+            currentIndex = currentIndex + 1
+            if currentIndex > #words then currentIndex = 1 end
+            task.wait(delaySeconds)
+        end
+    end)
+end)
+
+stopBtn.MouseButton1Click:Connect(function()
+    running = false
+    sStatus.Text = "STATUS: STOPPED"
+    sStatus.TextColor3 = Color3.fromRGB(255,80,80)
+end)
+
+print("✅ Goku Ultra GUI Perfectly Aligned & Loaded!")
